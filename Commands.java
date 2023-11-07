@@ -8,35 +8,31 @@ import java.time.LocalDate;
 
 class Commands {
 
-    public static String execute(CommandLine cmdLine) {
-        switch (cmdLine.getCommandName()) {
-            case "date":
-                return LocalDate.now().toString();
-            case "time":
-                return LocalTime.now().toString();
-            case "datetime":
-                return LocalDateTime.now().toString();
-            case "useraccount":
-                return System.getProperty("user.name");
-            case "userhome":
-                return System.getProperty("user.home");
-            case "os":
-                return System.getProperty("os.name") +" "+ "("+ System.getProperty("os.version")+")" ;
-            case "printenv":
-                return printEnv(cmdLine);
-            case "echo":
-            case "print":
-                return cmdLine.hasArgument() ? cmdLine.getCommandArgument() : "";
-            case "ls":
-                return listDirectory(cmdLine);
-            case "cat":
-                return catFile(cmdLine);
-            default:
-                return "Command '" + cmdLine.getCommandName() + "' not found.";
-        }
+    public static String date() {
+        return LocalDate.now().toString();
     }
 
-    private static String printEnv(CommandLine cmdLine) {
+    public static String time() {
+        return LocalTime.now().toString();
+    }
+
+    public static String datetime() {
+        return LocalDateTime.now().toString();
+    }
+
+    public static String useraccount() {
+        return System.getProperty("user.name");
+    }
+
+    public static String userhome() {
+        return System.getProperty("user.home");
+    }
+
+    public static String os() {
+        return System.getProperty("os.name") +" "+ "("+ System.getProperty("os.version")+")" ;
+    }
+
+    public static String printenv(CommandLine cmdLine) {
         if (cmdLine.hasArgument()) {   
             String envValue = System.getenv(cmdLine.getCommandArgument()); 
             return envValue != null ? envValue : ""; 
@@ -51,7 +47,11 @@ class Commands {
         }
     }
 
-    private static String listDirectory(CommandLine cmdLine) {
+    public static String echo(CommandLine cmdLine) {
+        return cmdLine.hasArgument() ? cmdLine.getCommandArgument() : "";
+    }
+
+    public static String ls(CommandLine cmdLine) {
         if (cmdLine.hasArgument()) {
                 File dir = new File(cmdLine.getCommandArgument());
             
@@ -69,7 +69,7 @@ class Commands {
         return "Not a directory";
     }
 
- private static String catFile(CommandLine cmdLine) {
+    public static String cat(CommandLine cmdLine) {
          if (!cmdLine.hasArgument()) {
              return "Please specify a path to a text file to read";
          } else {
