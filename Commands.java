@@ -8,6 +8,7 @@ import java.time.LocalDate;
 
 class Commands {
 
+
     public static String date() {
         return LocalDate.now().toString();
     }
